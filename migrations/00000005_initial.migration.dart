@@ -1,13 +1,16 @@
 import 'dart:async';
-
-import 'package:aqueduct/aqueduct.dart';   
-
+import 'package:aqueduct/aqueduct.dart';
 class Migration1 extends Migration { 
+ 
+
   @override
   Future upgrade() async {
-   database.createTable(SchemaTable("_Serve", [
+      database.createTable(SchemaTable("_Serve", [
 SchemaColumn("id", ManagedPropertyType.bigInteger, isPrimaryKey: true, autoincrement: true, isIndexed: false, isNullable: false, isUnique: false),
 SchemaColumn("name", ManagedPropertyType.string, isPrimaryKey: false, autoincrement: false, isIndexed: false, isNullable: false, isUnique: false),
+SchemaColumn("password", ManagedPropertyType.string, isPrimaryKey: false, autoincrement: false, isIndexed: false, isNullable: false, isUnique: false),
+SchemaColumn("email", ManagedPropertyType.string, isPrimaryKey: false, autoincrement: false, isIndexed: false, isNullable: false, isUnique: false),
+SchemaColumn("phone", ManagedPropertyType.bigInteger, isPrimaryKey: false, autoincrement: false, isIndexed: false, isNullable: false, isUnique: false),
 SchemaColumn("gender", ManagedPropertyType.integer, isPrimaryKey: false, autoincrement: false, isIndexed: false, isNullable: false, isUnique: false),
 SchemaColumn("familyId", ManagedPropertyType.document, isPrimaryKey: false, autoincrement: false, isIndexed: false, isNullable: false, isUnique: false),
 SchemaColumn("latitude", ManagedPropertyType.doublePrecision, isPrimaryKey: false, autoincrement: false, isIndexed: false, isNullable: false, isUnique: false),
@@ -15,8 +18,6 @@ SchemaColumn("longitude", ManagedPropertyType.doublePrecision, isPrimaryKey: fal
 SchemaColumn("dob", ManagedPropertyType.datetime, isPrimaryKey: false, autoincrement: false, isIndexed: false, isNullable: false, isUnique: false),
 ],
 ));
-
-
   }
   
   @override
@@ -26,10 +27,15 @@ SchemaColumn("dob", ManagedPropertyType.datetime, isPrimaryKey: false, autoincre
 Future seed() async {
   final heroNames = ["Mr. Nice", "Narco", "Bombasto", "Celeritas", "Magneta"];
 
-  for (final heroName in heroNames) {    
-    await database.store.execute("INSERT INTO _Serve (name,gender,familyId,latitude,longitude,dob) VALUES (@name,@gender,@familyId,@latitude,@longitude,@dob )", substitutionValues: {
+
+  for (final heroName in heroNames) {  
+ 
+    await database.store.execute("INSERT INTO _Serve (name,gender,password,familyId,email,phone,latitude,longitude,dob) VALUES (@name,@gender,@password,@familyId,@email,@phone,@latitude,@longitude,@dob )", substitutionValues: {
       "name": heroName,
       "gender":0,
+      "password":"password",
+      "phone":7879795680,
+      "email":"p1pahare@techie.com",
       "familyId":{ "primary_family":null},  
       "latitude":77.8,
       "longitude":22.9,
@@ -38,3 +44,4 @@ Future seed() async {
   }
 }
 }
+

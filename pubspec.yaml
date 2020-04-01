@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   aqueduct: ^3.0.0
-  date_format: 1.0.8
+  steel_crypt: 1.7.1+1
 
 dev_dependencies:
   test: ^1.0.0

@@ -27,6 +27,16 @@ class ServeController extends ResourceController {
 
     return Response.ok({"insertedServe":"${insertedServe.asMap().toString()}"});
   }
+    @Operation.post("login")
+  Future<Response> loginServe(@Bind.path('login') String login) async {
+  final  Map<String,dynamic> map = await request.body.decode();
+      // final serveQuery = Query<Serve>(context)..where((h) => h.n).equalTo(id);
+    // final serve = await serveQuery.fetchOne();
+    // if (serve == null) {
+      // return Response.notFound();
+    // }
+    return Response.ok({"insertedServe":"${map.toString()}"});
+  }
 
   @Operation.delete('id')
   Future<Response> deleteServeByID(@Bind.path('id') int id) async {

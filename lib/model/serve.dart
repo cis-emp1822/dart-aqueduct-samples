@@ -5,7 +5,10 @@ class Serve extends ManagedObject<_Serve>   implements _Serve  {
   void read(Map<String, dynamic> object,{ Iterable<String> ignore,Iterable<String> reject ,Iterable<String> require  }) {
     print(object.toString());
     id = int.tryParse(object['id']?.elementAt(0).toString()) ;  
+      phone = int.tryParse(object['phone']?.elementAt(0).toString()) ;  
     name = object['name'].elementAt(0).toString().trim() ;
+       email = object['email'].elementAt(0).toString().trim() ;
+          password = object['password'].elementAt(0).toString().trim() ;
     gender = int.tryParse(object['gender'].elementAt(0).toString()) ;
    final String datestr = object['dob'].elementAt(0).toString().trim() ; 
     
@@ -21,6 +24,9 @@ class Serve extends ManagedObject<_Serve>   implements _Serve  {
     if(id==null)
        return {
       'name': name,
+       'password': password,
+       'email':email,
+       'phone':phone,
       'gender':gender,
         'dob':dob,
         'longitude':longitude,
@@ -31,6 +37,9 @@ class Serve extends ManagedObject<_Serve>   implements _Serve  {
     return {
       'id': id,
       'name': name,
+       'password': password,
+       'email':email,
+       'phone':phone,
       'gender':gender,
         'dob':dob.toIso8601String(),
         'longitude':longitude,
@@ -49,6 +58,15 @@ class Serve extends ManagedObject<_Serve>   implements _Serve  {
 
    @Column(unique: false)
   int gender;
+
+   @Column(unique: false,databaseType: ManagedPropertyType.bigInteger)
+  int phone;
+
+     @Column(unique: false)
+  String email;
+  
+     @Column(unique: false)
+  String password;
 
    @Column(unique: false)
   DateTime dob;
