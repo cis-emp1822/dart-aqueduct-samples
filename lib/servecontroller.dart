@@ -14,7 +14,21 @@ class ServeController extends ResourceController {
   //   {'id': 14, 'name': 'Hulk'},
   //   {'id': 15, 'name': 'Black Widow'},
   // ];
-
+ @Operation.post('id')
+  Future<Response> loginServe(@Bind.path('id') String login) async {
+    print("here");
+  if(login != ('login') ) 
+  return Response.ok(responseBetter(status:false,message:"Enter login as path parameter", data:null));
+   final  Map<String,dynamic> map = await request.body.decode();
+      final serveQuery = Query<Serve>(context)
+      ..where((h) => h.email ).equalTo(map['email'].toString().trim())
+      ..where((h) => h.password ).equalTo(map['password'].toString().trim());
+    final serve = await serveQuery.fetchOne();
+    if (serve == null) {
+      return Response.ok(responseBetter(status:false,message:"Wrong Credentials Enterred.", data:null));
+      }
+    return Response.ok(responseBetter(status:true,message:"details fetched successfully", data:serve.asMap()));
+  }
   @Operation.post()
   Future<Response> createServe() async {
   final  Map<String,dynamic> map = await request.body.decode();
@@ -25,18 +39,9 @@ class ServeController extends ResourceController {
 
      final insertedServe = await query.insert();
 
-    return Response.ok({"insertedServe":"${insertedServe.asMap().toString()}"});
+    return Response.ok(responseBetter(status:true,message:"details fetched successfully", data:insertedServe.asMap()));
   }
-    @Operation.post("login")
-  Future<Response> loginServe(@Bind.path('login') String login) async {
-  final  Map<String,dynamic> map = await request.body.decode();
-      // final serveQuery = Query<Serve>(context)..where((h) => h.n).equalTo(id);
-    // final serve = await serveQuery.fetchOne();
-    // if (serve == null) {
-      // return Response.notFound();
-    // }
-    return Response.ok({"insertedServe":"${map.toString()}"});
-  }
+   
 
   @Operation.delete('id')
   Future<Response> deleteServeByID(@Bind.path('id') int id) async {
